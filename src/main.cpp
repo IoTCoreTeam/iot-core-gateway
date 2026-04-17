@@ -53,6 +53,7 @@ const char* node_name = NODE_NAME;
 // Control action types
 const char* ACTION_RELAY_CONTROL = "relay_control";
 const char* ACTION_DIGITAL = "digital";
+const char* ACTION_JSON_COMMAND = "json_command";
 
 void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len);
 
@@ -138,7 +139,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
             String ackPayload;
             serializeJson(ackDoc, ackPayload);
             client.publish("esp32/servo/ack", ackPayload.c_str());
-        } else if (action == ACTION_RELAY_CONTROL || action == ACTION_DIGITAL) {
+        } else if (action == ACTION_RELAY_CONTROL || action == ACTION_DIGITAL || action == ACTION_JSON_COMMAND) {
             String device = doc["device"] | "";
             String state = doc["state"] | "";
             String targetNode = doc["node_id"] | "";
